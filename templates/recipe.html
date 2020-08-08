@@ -6,8 +6,10 @@
   {% else %}
   <h3>{{ recipe.title }}</h3>
   <h4>{{ recipe.description }}</h4>
+
   <h5>
-    Shared by: <a href="/author/{{ author.id }}">{{ recipe.author.name }}</a>
+    Shared by:
+    <a href="/author/{{ author.id }}">{{ recipe.author.name }}</a>
   </h5>
 
   <p>{{ recipe.instructions }}&nbsp</p>

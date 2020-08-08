@@ -1,9 +1,11 @@
-<!--
-author detail page
+<h1>{{ author_id }}</h1>
 
-name
-bio
-list of recipes by that author
+<div class="container">
+  {% if not author %}
+  <h2>The author you are looking for does not exist</h2>
+  {% else %}
+  <h3>{{ author.name }}</h3>
+  <p>{{ author.bio }}</p>
 
-
--->
+  {% endif %}
+</div>
