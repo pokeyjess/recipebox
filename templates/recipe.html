@@ -1,10 +1,17 @@
-<!--
-Recipe detail page
+<h1>{{ recipe_id }}</h1>
 
-    title = models.CharField(max_length=50)
-    author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    description = models.TextField()
-    #was body...
-    time_required = models.CharField(max_length=50)
-    instructions = models.TextField()
--->
+<div class="container">
+  {% if not recipe %}
+  <h2>The recipe you are looking for does not exist</h2>
+  {% else %}
+  <h3>{{ recipe.title }}</h3>
+  <h4>{{ recipe.description }}</h4>
+  <h5>
+    Shared by: <a href="/author/{{ author.id }}">{{ recipe.author.name }}</a>
+  </h5>
+
+  <p>{{ recipe.instructions }}&nbsp</p>
+  <p>Time required: {{ recipe.time_required }}</p>
+
+  {% endif %}
+</div>
