@@ -1,19 +1,33 @@
-<h1>{{ recipe_id }}</h1>
-
-<div class="container">
-  {% if not recipe %}
-  <h2>The recipe you are looking for does not exist</h2>
-  {% else %}
-  <h3>{{ recipe.title }}</h3>
-  <h4>{{ recipe.description }}</h4>
-
-  <h5>
-    Shared by:
-    <a href="/author/{{ recipe.author.id }}">{{ recipe.author.name }}</a>
-  </h5>
-
-  <p>{{ recipe.instructions }}&nbsp</p>
-  <p>Time required: {{ recipe.time_required }}</p>
-
-  {% endif %}
-</div>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <base href="/" />
+    <title>{{ recipe.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div class="card">
+      <div class="header">
+        <div class="button">
+          <a href="#"><i class="link">Back to recipes</i></a>
+        </div>
+      </div>
+      <div>
+        <h1 class="title">
+          {{ recipe.title }}
+        </h1>
+        <i class="summary">
+          {{ recipe.time_required }} <br />
+          {{ recipe.description }}</i
+        >
+        <p class="info">{{ recipe.instructions }}</p>
+      </div>
+      <a class="bar" href="/author/{{ recipe.author.id }}"
+        >{{ recipe.author.name }}</a
+      >
+    </div>
+  </body>
+</html>

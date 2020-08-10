@@ -1,19 +1,36 @@
-<h1>{{ author_id }}</h1>
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{ author.name }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div class="card">
+      <div class="header">
+        <div class="button">
+          <a href="/"><i class="link">Back to recipes</i></a>
+        </div>
+      </div>
+      {% if not author %}
+      <h2>The author you are looking for does not exist</h2>
+      {% else %}
+      <h1 class="title">{{ author.name }}</h1>
+      <i class="summary">{{ author.quote }}</i>
 
-<div class="container">
-  {% if not author %}
-  <h2>The author you are looking for does not exist</h2>
-  {% else %}
-  <h3>{{ author.name }}</h3>
-  <p>{{ author.bio }}</p>
+      <p class="info">{{ author.bio }}</p>
 
-  <ul>
-    {% for recipe in recipes %}
-    <li>
-      <a href="/recipe/{{ recipe.id }}/">{{ recipe.title }}</a>
-    </li>
-    {% endfor %}
-  </ul>
+      <ul>
+        {% for recipe in recipes %}
+        <li>
+          <a class="bar" href="/recipe/{{ recipe.id }}/">{{ recipe.title }}</a>
+        </li>
+        {% endfor %}
+      </ul>
 
-  {% endif %}
-</div>
+      {% endif %}
+    </div>
+  </body>
+</html>

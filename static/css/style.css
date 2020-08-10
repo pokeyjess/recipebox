@@ -1,0 +1,72 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Trebuchet MS", sans-serif;
+  list-style-type: none;
+  text-decoration: none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -o-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body {
+  height: 100%;
+  background-color: #17bebb;
+}
+.card {
+  position: relative;
+  background: rgb(247, 238, 238);
+  max-width: 500px;
+  margin: 25px auto;
+  box-shadow: 0px 0px 50px 5px black;
+}
+.header {
+  /*background: -- dynamically change to photo for recipe/author;*/
+  background-size: cover;
+  min-height: 200px;
+}
+.button a .link {
+  position: absolute;
+  left: 75%;
+  bottom: 55.7%;
+  background: #17bebb;
+  color: rgb(247, 238, 238);
+  font-size: 0.5em;
+  font-weight: bold;
+  text-align: center;
+  padding: 15px;
+  border-radius: 50%;
+  box-shadow: 1px 1px 10px 1px #19c5c2;
+}
+.title {
+  color: black;
+  display: block;
+  position: relative;
+  text-align: center;
+  text-transform: uppercase;
+  margin: 10px 25px;
+}
+.summary {
+  color: #969090;
+  margin: 0 30px;
+  display: block;
+  position: relative;
+  text-align: center;
+}
+.info {
+  margin: 10px 30px;
+}
+a.bar {
+  display: block;
+  background: rgb(97, 0, 97);
+  color: rgb(247, 238, 238);
+  position: relative;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+  padding: 10px;
+  transition: 250ms;
+}
+a:hover {
+  background-color: rgb(192, 75, 192);
+}
