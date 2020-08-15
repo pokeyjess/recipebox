@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   </head>
   <body>
+    <h2>Am I logged in? {{ request.user.is_authenticated }}</h2>
+    {% if request.user.is_authenticated %}
+    <h3>Welcome, {{ request.user.author.name }}!</h3>
+    {% endif %}
     
     <div class="card">
       <ul>
@@ -23,6 +27,15 @@
   </br>
 </br>
     <a href="/newauthor/"><i>Submit New Author</i></a>
+  </br>
+</br>
+    <a href="/signup/"><i>Sign Up</i></a>
+  </br>
+</br>
+    <a href="/login/"><i>Log In</i></a>
+  </br>
+</br>
+    <a href="/logout/"><i>Log Out</i></a>
   </div>
   </body>
 </html>

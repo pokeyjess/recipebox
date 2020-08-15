@@ -1,8 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
 class Author(models.Model):
     name = models.CharField(max_length=80)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     bio = models.TextField()
     quote = models.CharField(max_length=50, default="Just another cook")
 
