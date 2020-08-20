@@ -1,8 +1,8 @@
 from django.shortcuts import render, HttpResponseRedirect, reverse
+from django.http import HttpResponseForbidden
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-
 from homepage.models import Recipe, Author
 from homepage.forms import AddRecipeForm, AddAuthorForm, LoginForm, SignUpForm
 
@@ -31,9 +31,7 @@ def add_recipe(request):
             data = form.cleaned_data
             Recipe.objects.create(
                 title=data.get('title'),
-                author=request.user.author,
-                # author=data.get('author'),
-                # request.user -- is_staff is a field. also, 'author'
+                author=data.get('author'),
                 description=data.get('description'),
                 instructions=data.get('instructions'),
             )
@@ -45,13 +43,21 @@ def add_recipe(request):
 
 @login_required
 def add_author(request):
-    if request.method == "POST":
-        form = AddAuthorForm(request.POST)
-        form.save()
-        return HttpResponseRedirect(reverse("homepage"))
+    if request.user.is_staff:
+        if request.method == "POST":
+            form = AddAuthorForm(request.POST)
+            if form.is_valid():
+                data = form.cleaned_data
+                new_user = User.objects.create_user(username=data.get(
+                    "username"), password=data.get("password"))
+                Author.objects.create(name=data.get(
+                    'name'), user=new_user, bio=data.get('bio'))
+            return HttpResponseRedirect(reverse("homepage"))
+        form = AddAuthorForm()
+        return render(request, "generic_form.html", {"form": form})
 
-    form = AddAuthorForm()
-    return render(request, "generic_form.html", {"form": form})
+    else:
+        return HttpResponseForbidden("Non-staff not allowed")
 
 
 def login_view(request):

@@ -8,9 +8,11 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   </head>
   <body>
+    <!--
     <h2>Am I logged in? {{ request.user.is_authenticated }}</h2>
+    -->
     {% if request.user.is_authenticated %}
-    <h3>Welcome, {{ request.user.author.name }}!</h3>
+    <h2>Welcome, {{ request.user.username }}!</h2>
     {% endif %}
     
     <div class="card">
