@@ -28,6 +28,12 @@
           <a class="bar" href="/recipe/{{ recipe.id }}/">{{ recipe.title }}</a>
         </li>
         {% endfor %}
+        <li><div class="bar">Favorites:</div></li>
+        {% for fave in favorites %}
+        <li>
+          <a class="bar" href="/recipe/{{ fave.id }}/">{{ fave.title }}</a>
+        </li>
+        {% endfor %}
       </ul>
 
       {% endif %}

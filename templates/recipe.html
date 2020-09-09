@@ -14,6 +14,13 @@
         <div class="button">
           <a href="#"><i class="link">Back to recipes</i></a>
         </div>
+        <div class="button">
+          {% if can_favorite %}
+            <a href="/favorite/{{ recipe.id }}">
+              Favorite
+            </a>
+          {% endif %}
+        </div>
       </div>
       <div>
         <h1 class="title">
@@ -27,7 +34,12 @@
       </div>
       <a class="bar" href="/author/{{ recipe.author.id }}"
         >{{ recipe.author.name }}</a
-      >
+        >
+      {% if is_author %}
+        <a class="bar" href="/edit_recipe/{{ recipe.id }}">
+          Edit Recipe
+        </a>
+      {% endif %}
     </div>
   </body>
 </html>
