@@ -6,6 +6,8 @@ from homepage import views
 
 urlpatterns = [
     path('', views.index, name="homepage"),
+    path('edit_recipe/<int:recipe_id>/', views.recipe_edit_view),
+    path('favorite/<int:recipe_id>/', views.favorite_view),
     path('recipe/<int:recipe_id>/', views.recipe),
     path('author/<int:author_id>/', views.author),
     path('newrecipe/', views.add_recipe, name="newrecipe"),

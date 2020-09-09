@@ -4,7 +4,7 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from homepage.models import Recipe, Author
-from homepage.forms import AddRecipeForm, AddAuthorForm, LoginForm, SignUpForm
+from homepage.forms import AddRecipeForm, AddAuthorForm, LoginForm, SignUpForm, RecipeEditForm
 
 
 def index(request):
@@ -14,14 +14,30 @@ def index(request):
 
 def recipe(request, recipe_id):
     my_recipe = Recipe.objects.filter(id=recipe_id).first()
-    return render(request, "recipe.html", {"recipe": my_recipe})
+    is_author = False
+    can_favorite = False
+    if request.user.is_authenticated:
+        request_author = Author.objects.get(user=request.user)
+        can_favorite = True
+        if my_recipe.author == request_author:
+            is_author = True
+    
+    return render(request, "recipe.html", {
+        "recipe": my_recipe,
+        "is_author": is_author,
+        "can_favorite": can_favorite
+        })
 
 
 def author(request, author_id):
     author_info = Author.objects.filter(id=author_id).first()
     recipe_list = Recipe.objects.filter(author=author_info)
-    return render(request, "author.html", {"author": author_info, "recipes": recipe_list})
-
+    favorite_list = Recipe.objects.filter(favorited=author_info)
+    return render(request, "author.html", {
+        "author": author_info,
+        "recipes": recipe_list,
+        "favorites": favorite_list
+    })
 
 @login_required
 def add_recipe(request):
@@ -59,6 +75,26 @@ def add_author(request):
     else:
         return HttpResponseForbidden("Non-staff not allowed")
 
+@login_required
+def recipe_edit_view(request, recipe_id):
+    edit_recipe = Recipe.objects.get(id=recipe_id)
+    if not request.user.is_staff:
+        if edit_recipe.author.user != request.user:
+            return HttpResponseRedirect(reverse('homepage'))
+    if request.method == 'POST':
+        form = RecipeEditForm(request.POST, instance=edit_recipe)
+        form.save()
+        return HttpResponseRedirect('/recipe/{}/'.format(recipe_id))
+    
+    form = RecipeEditForm(instance=edit_recipe)
+    return render(request, 'generic_form.html', {'form': form})
+
+def favorite_view(request, recipe_id):
+    recipe = Recipe.objects.get(id=recipe_id)
+    author = Author.objects.get(user=request.user)
+    recipe.favorited.add(author)
+    recipe.save()
+    return HttpResponseRedirect('/author/{}/'.format(author.id))
 
 def login_view(request):
     if request.method == "POST":

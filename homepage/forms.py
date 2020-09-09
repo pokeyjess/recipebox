@@ -1,5 +1,5 @@
 from django import forms
-from homepage.models import Author
+from homepage.models import Author, Recipe
 
 
 class AddRecipeForm(forms.Form):
@@ -8,6 +8,16 @@ class AddRecipeForm(forms.Form):
     description = forms.CharField(max_length=100)
     instructions = forms.CharField(widget=forms.Textarea)
 
+class RecipeEditForm(forms.ModelForm):
+    class Meta:
+        model = Recipe
+        fiels = [
+            'title',
+            'description',
+            'time_required',
+            'instructions'
+        ]
+        exclude = ['author', 'favorited']
 
 class AddAuthorForm(forms.ModelForm):
     class Meta:
